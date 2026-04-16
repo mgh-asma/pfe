@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trackr — Tags</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#f3f4f6; min-height:100vh; color:#0f1923; }
+
+  header {
+    background:#fff; border-bottom:1px solid #e4e6ea;
+    padding:0 24px; height:52px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo { font-size:15px; font-weight:600; color:#0f1923; letter-spacing:-0.01em; }
+  .logo span { color:#6b7280; font-weight:400; font-size:13px; }
+  .hdr-right { display:flex; align-items:center; gap:12px; }
+  .user-txt { font-size:13px; color:#6b7280; }
+  .user-txt strong { color:#0f1923; }
+
+  .btn-sm {
+    font-size:13px; padding:6px 12px; border-radius:4px;
+    border:1px solid #e4e6ea; background:#fff;
+    color:#374151; cursor:pointer; font-family:inherit;
+    transition:background 0.15s;
+  }
+  .btn-sm:hover { background:#f9fafb; }
+  .btn-sm.primary { background:#0f1923; color:#fff; border-color:#0f1923; }
+  .btn-sm.primary:hover { background:#1e2d3d; }
+  .btn-sm.danger { color:#dc2626; border-color:#fecaca; }
+  .btn-sm.danger:hover { background:#fef2f2; }
+
+  main { max-width:960px; margin:0 auto; padding:32px 24px; }
+
+  .page-hdr { margin-bottom:24px; }
+  .page-hdr h1 { font-size:20px; font-weight:600; color:#0f1923; letter-spacing:-0.02em; }
+  .page-hdr p  { font-size:13px; color:#6b7280; margin-top:4px; }
+
+  /* TAGS */
+  .tags-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; margin-bottom:32px; }
+
+  .tag-card {
+    background:#fff; border:1px solid #e4e6ea; border-radius:6px;
+    padding:16px; cursor:pointer; position:relative;
+    transition:border-color 0.15s, box-shadow 0.15s;
+  }
+  .tag-card:hover { border-color:#0f1923; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+
+  .tag-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .tag-id  { font-size:15px; font-weight:600; color:#0f1923; letter-spacing:-0.01em; }
+
+  .badge {
+    font-size:11px; padding:2px 8px; border-radius:20px;
+    font-weight:500;
+  }
+  .badge.on  { background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0; }
+  .badge.off { background:#f9fafb; color:#9ca3af; border:1px solid #e4e6ea; }
+
+  .tag-name { font-size:13px; color:#374151; margin-bottom:2px; }
+  .tag-mac  { font-size:12px; color:#9ca3af; margin-bottom:12px; }
+
+  .tag-pos {
+    background:#f9fafb; border:1px solid #e4e6ea; border-radius:4px;
+    padding:8px 10px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .tag-pos .lbl { font-size:11px; color:#9ca3af; }
+  .tag-pos .val { font-size:14px; font-weight:600; color:#0f1923; }
+
+  .tag-last { font-size:11px; color:#9ca3af; margin-top:8px; text-align:right; }
+
+  .btn-del {
+    position:absolute; top:10px; right:10px;
+    background:none; border:none; color:#d1d5db;
+    cursor:pointer; font-size:14px; padding:2px 5px;
+    border-radius:3px; display:none;
+  }
+  .tag-card:hover .btn-del { display:block; }
+  .btn-del:hover { color:#dc2626; background:#fef2f2; }
+
+  /* SECTIONS */
+  .section { margin-bottom:28px; }
+  .section-hdr {
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:10px; border-bottom:1px solid #e4e6ea; margin-bottom:14px;
+  }
+  .section-title { font-size:13px; font-weight:500; color:#374151; }
+
+  /* FORMS */
+  .form-box { background:#fff; border:1px solid #e4e6ea; border-radius:6px; padding:16px; display:none; }
+  .form-box.show { display:block; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+  .fld label { display:block; font-size:12px; color:#6b7280; margin-bottom:5px; }
+  .fld input, .fld select {
+    width:100%; border:1px solid #e4e6ea; border-radius:4px;
+    padding:8px 10px; font-size:13px; color:#0f1923;
+    font-family:inherit; outline:none;
+  }
+  .fld input:focus, .fld select:focus { border-color:#0f1923; }
+  .form-actions { display:flex; gap:8px; }
+
+  /* ALERTS */
+  .alert-row {
+    background:#fff; border:1px solid #e4e6ea; border-radius:4px;
+    padding:10px 14px; margin-bottom:6px;
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:13px;
+  }
+  .alert-row.unread { border-left:3px solid #f59e0b; }
+  .alert-tag { font-weight:600; color:#0f1923; margin-right:8px; font-size:12px; }
+  .alert-ts  { font-size:11px; color:#9ca3af; }
+
+  /* USERS */
+  .user-row {
+    background:#fff; border:1px solid #e4e6ea; border-radius:4px;
+    padding:10px 14px; margin-bottom:6px;
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:13px;
+  }
+  .role-badge {
+    font-size:11px; padding:2px 8px; border-radius:20px;
+    font-weight:500; margin-left:8px;
+  }
+  .role-badge.admin { background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; }
+  .role-badge.user  { background:#f9fafb; color:#6b7280; border:1px solid #e4e6ea; }
+
+  .empty { text-align:center; padding:24px; color:#9ca3af; font-size:13px; }
+
+  .toast {
+    position:fixed; bottom:20px; right:20px;
+    background:#0f1923; color:#fff; border-radius:4px;
+    padding:10px 16px; font-size:13px;
+    transform:translateY(60px); opacity:0; transition:all 0.25s; z-index:999;
+  }
+  .toast.show { transform:translateY(0); opacity:1; }
+  .toast.ok  { background:#16a34a; }
+  .toast.err { background:#dc2626; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Trackr <span>/ sélection du tag</span></div>
+  <div class="hdr-right">
+    <span class="user-txt">Connecté : <strong id="hdr-user">—</strong></span>
+    <button class="btn-sm" id="btn-admin" style="display:none" onclick="document.getElementById('admin-section').scrollIntoView({behavior:'smooth'})">Admin</button>
+    <button class="btn-sm danger" onclick="doLogout()">Déconnexion</button>
+  </div>
+</header>
+
+<main>
+  <div class="page-hdr">
+    <h1>Tags enregistrés</h1>
+    <p>Sélectionnez un tag pour consulter sa localisation en temps réel</p>
+  </div>
+
+  <div class="tags-grid" id="tags-grid">
+    <div class="empty">Chargement...</div>
+  </div>
+
+  <div class="section" id="add-tag-section" style="display:none">
+    <div class="section-hdr">
+      <span class="section-title">Nouveau tag</span>
+      <button class="btn-sm primary" onclick="document.getElementById('add-tag-form').classList.toggle('show')">+ Ajouter</button>
+    </div>
+    <div class="form-box" id="add-tag-form">
+      <div class="form-row">
+        <div class="fld"><label>Tag ID</label><input type="text" id="nt-id" placeholder="TAG2" /></div>
+        <div class="fld"><label>Nom</label><input type="text" id="nt-name" placeholder="Tag ESP32 #2" /></div>
+      </div>
+      <div class="form-row">
+        <div class="fld"><label>Adresse MAC</label><input type="text" id="nt-mac" placeholder="AA:BB:CC:DD:EE:FF" /></div>
+        <div class="fld"><label>Description</label><input type="text" id="nt-desc" placeholder="Optionnel" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-sm primary" onclick="addTag()">Enregistrer</button>
+        <button class="btn-sm" onclick="document.getElementById('add-tag-form').classList.remove('show')">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-hdr">
+      <span class="section-title">Alertes récentes</span>
+      <button class="btn-sm" onclick="loadAlerts()">Actualiser</button>
+    </div>
+    <div id="alerts-list"><div class="empty">Aucune alerte</div></div>
+  </div>
+
+  <div class="section" id="admin-section" style="display:none">
+    <div class="section-hdr">
+      <span class="section-title">Gestion des opérateurs</span>
+      <button class="btn-sm primary" onclick="document.getElementById('add-user-form').classList.toggle('show')">+ Opérateur</button>
+    </div>
+    <div id="users-list"></div>
+    <div class="form-box" id="add-user-form" style="margin-top:10px">
+      <div class="form-row">
+        <div class="fld"><label>Identifiant</label><input type="text" id="nu-name" placeholder="operateur1" /></div>
+        <div class="fld"><label>Mot de passe</label><input type="password" id="nu-pwd" placeholder="••••••••" /></div>
+      </div>
+      <div class="form-row">
+        <div class="fld"><label>Email</label><input type="email" id="nu-email" placeholder="email@depot.tn" /></div>
+        <div class="fld"><label>Rôle</label><select id="nu-role"><option value="user">Opérateur</option><option value="admin">Administrateur</option></select></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-sm primary" onclick="addUser()">Créer</button>
+        <button class="btn-sm" onclick="document.getElementById('add-user-form').classList.remove('show')">Annuler</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var TOKEN = localStorage.getItem("rtls_token");
+var ROLE  = localStorage.getItem("rtls_role");
+var UNAME = localStorage.getItem("rtls_username");
+if (!TOKEN) { window.location.href = "/login"; }
+
+document.getElementById("hdr-user").textContent = UNAME || "—";
+if (ROLE === "admin") {
+  document.getElementById("btn-admin").style.display = "inline-block";
+  document.getElementById("add-tag-section").style.display = "block";
+  document.getElementById("admin-section").style.display = "block";
+  loadUsers();
+}
+
+function hdrs() { return { "Content-Type":"application/json", "X-Token": TOKEN }; }
+
+function toast(msg, type) {
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.className = "toast show " + (type||"ok");
+  setTimeout(function(){ t.className = "toast"; }, 3000);
+}
+
+function loadTags() {
+  fetch("/api/tags", { headers: hdrs() })
+    .then(function(r){ if(r.status===401){window.location.href="/login";return null;} return r.json(); })
+    .then(function(d){
+      if(!d) return;
+      var g = document.getElementById("tags-grid");
+      if(!d.tags||d.tags.length===0){ g.innerHTML='<div class="empty">Aucun tag enregistré</div>'; return; }
+      g.innerHTML = "";
+      d.tags.forEach(function(tag){
+        var on = tag.online;
+        var pos = tag.last_position && tag.last_position.x !== null
+          ? tag.last_position.x.toFixed(2) + ", " + tag.last_position.y.toFixed(2)
+          : "—";
+        var card = document.createElement("div");
+        card.className = "tag-card";
+        card.innerHTML =
+          '<button class="btn-del" onclick="delTag(event,\''+tag.tag_id+'\')">✕</button>'+
+          '<div class="tag-top">'+
+            '<span class="tag-id">'+tag.tag_id+'</span>'+
+            '<span class="badge '+(on?"on":"off")+'">'+(on?"En ligne":"Hors ligne")+'</span>'+
+          '</div>'+
+          '<div class="tag-name">'+tag.name+'</div>'+
+          '<div class="tag-mac">'+(tag.mac_address||"—")+'</div>'+
+          '<div class="tag-pos">'+
+            '<span class="lbl">Dernière position</span>'+
+            '<span class="val">'+pos+'</span>'+
+          '</div>'+
+          '<div class="tag-last">Vu : '+(tag.last_seen||"Jamais")+'</div>';
+        card.addEventListener("click", function(e){
+          if(e.target.classList.contains("btn-del")) return;
+          localStorage.setItem("rtls_tag", tag.tag_id);
+          window.location.href = "/dashboard";
+        });
+        g.appendChild(card);
+      });
+    });
+}
+
+function addTag() {
+  var id=document.getElementById("nt-id").value.trim();
+  var nm=document.getElementById("nt-name").value.trim();
+  var mc=document.getElementById("nt-mac").value.trim();
+  var dc=document.getElementById("nt-desc").value.trim();
+  if(!id||!nm){ toast("ID et Nom requis","err"); return; }
+  fetch("/api/tags",{method:"POST",headers:hdrs(),body:JSON.stringify({tag_id:id,name:nm,mac_address:mc,description:dc})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.status==="ok"){toast("Tag ajouté","ok");document.getElementById("add-tag-form").classList.remove("show");loadTags();}
+      else toast(d.message||"Erreur","err");
+    });
+}
+
+function delTag(e,id){
+  e.stopPropagation();
+  if(!confirm("Supprimer "+id+" ?")) return;
+  fetch("/api/tags/"+id,{method:"DELETE",headers:hdrs()})
+    .then(function(r){return r.json();})
+    .then(function(d){if(d.status==="ok"){toast("Supprimé","ok");loadTags();}});
+}
+
+function loadAlerts(){
+  fetch("/api/alerts?limit=10",{headers:hdrs()})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var list=document.getElementById("alerts-list");
+      if(!d.alerts||d.alerts.length===0){list.innerHTML='<div class="empty">Aucune alerte</div>';return;}
+      list.innerHTML="";
+      d.alerts.forEach(function(a){
+        var row=document.createElement("div");
+        row.className="alert-row"+(a.acknowledged?"":" unread");
+        row.innerHTML=
+          '<div><span class="alert-tag">'+(a.tag_id||"—")+'</span>'+a.alert_type+' — '+(a.message||"")+'</div>'+
+          '<div style="display:flex;align-items:center;gap:10px">'+
+            '<span class="alert-ts">'+a.timestamp+'</span>'+
+            (!a.acknowledged?'<button class="btn-sm" style="font-size:11px;padding:3px 8px" onclick="ackAlert('+a.id+')">OK</button>':'')+
+          '</div>';
+        list.appendChild(row);
+      });
+    });
+}
+
+function ackAlert(id){
+  fetch("/api/alerts/acknowledge/"+id,{method:"POST",headers:hdrs()}).then(loadAlerts);
+}
+
+function loadUsers(){
+  fetch("/api/users",{headers:hdrs()})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var list=document.getElementById("users-list");
+      list.innerHTML="";
+      (d.users||[]).forEach(function(u){
+        var row=document.createElement("div");
+        row.className="user-row";
+        row.innerHTML=
+          '<div style="display:flex;align-items:center">'+
+            '<strong>'+u.username+'</strong>'+
+            '<span class="role-badge '+u.role+'">'+u.role+'</span>'+
+            '<span style="font-size:12px;color:#9ca3af;margin-left:12px">'+(u.email||"")+'</span>'+
+          '</div>'+
+          (u.username!=="admin"?'<button class="btn-sm danger" onclick="delUser(\''+u.username+'\')">Supprimer</button>':'');
+        list.appendChild(row);
+      });
+    });
+}
+
+function addUser(){
+  var un=document.getElementById("nu-name").value.trim();
+  var pw=document.getElementById("nu-pwd").value;
+  var em=document.getElementById("nu-email").value.trim();
+  var rl=document.getElementById("nu-role").value;
+  if(!un||!pw){toast("Identifiant et mot de passe requis","err");return;}
+  fetch("/api/users",{method:"POST",headers:hdrs(),body:JSON.stringify({username:un,password:pw,email:em,role:rl})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.status==="ok"){toast("Opérateur créé","ok");document.getElementById("add-user-form").classList.remove("show");loadUsers();}
+      else toast(d.message||"Erreur","err");
+    });
+}
+
+function delUser(u){
+  if(!confirm("Supprimer "+u+" ?")) return;
+  fetch("/api/users/"+u,{method:"DELETE",headers:hdrs()})
+    .then(function(r){return r.json();})
+    .then(function(d){if(d.status==="ok"){toast("Supprimé","ok");loadUsers();}});
+}
+
+function doLogout(){
+  fetch("/api/logout",{method:"POST",headers:hdrs()}).finally(function(){
+    localStorage.clear(); window.location.href="/login";
+  });
+}
+
+loadTags();
+loadAlerts();
+setInterval(loadTags, 10000);
+setInterval(loadAlerts, 15000);
+</script>
+</body>
+</html>

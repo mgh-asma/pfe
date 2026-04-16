@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Regression lineaire",
+    "mae_x": 0.298,
+    "mae_y": 0.258,
+    "rmse_x": 0.539,
+    "rmse_y": 0.372,
+    "mean_error": 0.422,
+    "median_error": 0.321
+  },
+  {
+    "name": "KNN (k=5)",
+    "mae_x": 0.096,
+    "mae_y": 0.076,
+    "rmse_x": 0.216,
+    "rmse_y": 0.166,
+    "mean_error": 0.131,
+    "median_error": 0.048
+  },
+  {
+    "name": "KNN (k=15 optimal)",
+    "mae_x": 0.066,
+    "mae_y": 0.057,
+    "rmse_x": 0.182,
+    "rmse_y": 0.137,
+    "mean_error": 0.095,
+    "median_error": 0.03
+  },
+  {
+    "name": "Reseau de neurones MLP",
+    "mae_x": 0.075,
+    "mae_y": 0.058,
+    "rmse_x": 0.208,
+    "rmse_y": 0.142,
+    "mean_error": 0.103,
+    "median_error": 0.044
+  }
+]

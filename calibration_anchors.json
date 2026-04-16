@@ -1,0 +1,138 @@
+{
+  "generated_at": "2026-04-11 00:36:28",
+  "model": {
+    "formula": "RSSI = A - 10 * n * log10(d)",
+    "inverse": "d = 10 ^ ((A - RSSI) / (10 * n))"
+  },
+  "anchors": {
+    "A1": {
+      "A_dBm": -63.0,
+      "n": 1.6487,
+      "rmse_dB": 1.9281,
+      "r2": 0.8821,
+      "monotonie_ok": true,
+      "calibration_points": {
+        "1.0": -63.0,
+        "2.0": -65.0,
+        "3.0": -70.5,
+        "4.0": -71.0,
+        "5.0": -74.0,
+        "7.0": -80.0
+      },
+      "comparison": {
+        "1.0": {
+          "rssi_reel": -63.0,
+          "rssi_predit": -63.0,
+          "erreur_dB": 0.0
+        },
+        "2.0": {
+          "rssi_reel": -65.0,
+          "rssi_predit": -67.96,
+          "erreur_dB": 2.96
+        },
+        "3.0": {
+          "rssi_reel": -70.5,
+          "rssi_predit": -70.87,
+          "erreur_dB": 0.37
+        },
+        "4.0": {
+          "rssi_reel": -71.0,
+          "rssi_predit": -72.93,
+          "erreur_dB": 1.93
+        },
+        "5.0": {
+          "rssi_reel": -74.0,
+          "rssi_predit": -74.52,
+          "erreur_dB": 0.52
+        },
+        "7.0": {
+          "rssi_reel": -80.0,
+          "rssi_predit": -76.93,
+          "erreur_dB": -3.07
+        }
+      }
+    },
+    "A2": {
+      "A_dBm": -67.0,
+      "n": 2.0921,
+      "rmse_dB": 1.5632,
+      "r2": 0.9286,
+      "monotonie_ok": true,
+      "calibration_points": {
+        "1.0": -67.0,
+        "2.0": -70.0,
+        "3.0": -78.0,
+        "4.0": -80.0,
+        "5.0": -82.0
+      },
+      "comparison": {
+        "1.0": {
+          "rssi_reel": -67.0,
+          "rssi_predit": -67.0,
+          "erreur_dB": 0.0
+        },
+        "2.0": {
+          "rssi_reel": -70.0,
+          "rssi_predit": -73.3,
+          "erreur_dB": 3.3
+        },
+        "3.0": {
+          "rssi_reel": -78.0,
+          "rssi_predit": -76.98,
+          "erreur_dB": -1.02
+        },
+        "4.0": {
+          "rssi_reel": -80.0,
+          "rssi_predit": -79.6,
+          "erreur_dB": -0.4
+        },
+        "5.0": {
+          "rssi_reel": -82.0,
+          "rssi_predit": -81.62,
+          "erreur_dB": -0.38
+        }
+      }
+    },
+    "A3": {
+      "A_dBm": -60.0,
+      "n": 1.8501,
+      "rmse_dB": 1.7593,
+      "r2": 0.8608,
+      "monotonie_ok": true,
+      "calibration_points": {
+        "0.5": -58.0,
+        "1.0": -60.0,
+        "2.0": -67.0,
+        "3.0": -68.0,
+        "3.5": -70.0
+      },
+      "comparison": {
+        "0.5": {
+          "rssi_reel": -58.0,
+          "rssi_predit": -54.43,
+          "erreur_dB": -3.57
+        },
+        "1.0": {
+          "rssi_reel": -60.0,
+          "rssi_predit": -60.0,
+          "erreur_dB": 0.0
+        },
+        "2.0": {
+          "rssi_reel": -67.0,
+          "rssi_predit": -65.57,
+          "erreur_dB": -1.43
+        },
+        "3.0": {
+          "rssi_reel": -68.0,
+          "rssi_predit": -68.83,
+          "erreur_dB": 0.83
+        },
+        "3.5": {
+          "rssi_reel": -70.0,
+          "rssi_predit": -70.07,
+          "erreur_dB": 0.07
+        }
+      }
+    }
+  }
+}

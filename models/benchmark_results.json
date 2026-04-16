@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Trilateration+Kalman",
+    "mean_error": 0.6,
+    "median_error": 0.48,
+    "latency_mean_ms": 0.169,
+    "latency_median_ms": 0.094,
+    "latency_p99_ms": 0.112,
+    "memory_peak_kb": 0.5,
+    "cpu_time_ms": 0.1
+  },
+  {
+    "name": "Regression lineaire",
+    "mean_error": 0.478,
+    "median_error": 0.355,
+    "latency_mean_ms": 0.167,
+    "latency_median_ms": 0.166,
+    "latency_p99_ms": 0.194,
+    "memory_peak_kb": 6.2,
+    "cpu_time_ms": 17.7
+  },
+  {
+    "name": "KNN (k=5)",
+    "mean_error": 0.243,
+    "median_error": 0.048,
+    "latency_mean_ms": 1.484,
+    "latency_median_ms": 1.455,
+    "latency_p99_ms": 2.685,
+    "memory_peak_kb": 33.1,
+    "cpu_time_ms": 203.7
+  },
+  {
+    "name": "KNN (k=15 optimal)",
+    "mean_error": 0.226,
+    "median_error": 0.032,
+    "latency_mean_ms": 1.577,
+    "latency_median_ms": 1.451,
+    "latency_p99_ms": 2.731,
+    "memory_peak_kb": 72.2,
+    "cpu_time_ms": 211.5
+  },
+  {
+    "name": "Reseau neurones MLP",
+    "mean_error": 0.157,
+    "median_error": 0.044,
+    "latency_mean_ms": 0.259,
+    "latency_median_ms": 0.256,
+    "latency_p99_ms": 0.292,
+    "memory_peak_kb": 101.4,
+    "cpu_time_ms": 32.7
+  }
+]
